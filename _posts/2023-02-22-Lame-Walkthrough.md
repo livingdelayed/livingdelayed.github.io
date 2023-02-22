@@ -2,6 +2,8 @@
 
 This is a walkthrough for the first easy machine in Hack the Box - Lame. This is a very simple machine to root and is good practice for anyone wanting to get into HTB.
 
+![image](https://user-images.githubusercontent.com/126024971/220775916-dfa41877-1289-4cfd-88ae-8b4d14436e26.png)
+
 ---
 
 ### Enumeration
