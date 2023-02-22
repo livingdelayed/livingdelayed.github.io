@@ -1,5 +1,3 @@
-Here you can say lots of fun things about your site.
+The goal of this blog is to go through every machine on Hack the Box.
 
-Maybe say a some things about yourself.
-
-Or maybe what you plan to blog about.
+This blog will evolve over time, right now it is pretty barebones.
